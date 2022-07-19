@@ -3,10 +3,22 @@ import styles from '../styles/Home.module.css';
 
 import HomePage from '../containers/home';
 
-export default function Home() {
+import { fetchMLBGames } from '../thunks/Api';
+
+export default function Home({ games }) {
     return (
         <div className={styles.container}>
-            <HomePage />
+            <HomePage games={games} />
         </div>
     );
+}
+
+export async function getStaticProps() {
+    const games = await fetchMLBGames();
+
+    return {
+        props: {
+            games: games || null,
+        },
+    };
 }
