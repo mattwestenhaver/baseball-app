@@ -1,7 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 
-const HomepageContainer = ({ games }) => {
+// types
+import { Games } from '../../types/games';
+
+type Props = {
+    games: Games;
+};
+
+const HomepageContainer: React.FC = ({ games }: Props) => {
     const [formattedGames, setFormattedGames] = useState([]);
 
     useEffect(() => {

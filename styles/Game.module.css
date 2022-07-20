@@ -1,0 +1,10 @@
+.gameContainer {
+    width: fit-content;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 6px;
+}
+
+.scores {
+    text-align: center;
+}
