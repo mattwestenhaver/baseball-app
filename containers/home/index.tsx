@@ -4,6 +4,9 @@ import Link from 'next/link';
 // types
 import { Games } from '../../types/games';
 
+// utils
+import { getTeamNames } from '../../utils/games';
+
 type Props = {
     games: Games;
 };
@@ -20,22 +23,34 @@ const HomepageContainer: React.FC = ({ games }: Props) => {
 
     return (
         <div>
-            {formattedGames.map((game) => {
-                const { gamePk, seriesDescription, teams } = game;
-                const awayScore = teams.away.score;
-                const homeScore = teams.home.score;
+            {!!formattedGames?.length ? (
+                formattedGames.map((game) => {
+                    const { gamePk, teams } = game;
+                    const {
+                        score: awayScore,
+                        team: { name: awayName },
+                    } = teams.away;
+                    const {
+                        score: homeScore,
+                        team: { name: homeName },
+                    } = teams.home;
 
-                return (
-                    <div key={gamePk}>
-                        <Link href={`/games/${gamePk}`}>
-                            {seriesDescription}
-                        </Link>
-                        <div>
-                            {awayScore} - {homeScore}
+                    return (
+                        <div key={gamePk} style={{ marginBottom: '6px' }}>
+                            <Link href={`/games/${gamePk}`}>
+                                <div style={{ cursor: 'pointer' }}>
+                                    {awayName} vs. {homeName}
+                                </div>
+                            </Link>
+                            <div style={{ cursor: 'default' }}>
+                                {awayScore} - {homeScore}
+                            </div>
                         </div>
-                    </div>
-                );
-            })}
+                    );
+                })
+            ) : (
+                <div>No Games</div>
+            )}
         </div>
     );
 };

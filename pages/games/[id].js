@@ -21,7 +21,7 @@ export async function getStaticPaths() {
 }
 
 export async function getStaticProps({ params }) {
-    const game = await fetchMLBGameById();
+    const game = await fetchMLBGameById(params.id);
 
     return {
         props: {

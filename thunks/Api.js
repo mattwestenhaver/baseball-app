@@ -12,7 +12,7 @@ export async function fetchMLBGames() {
 
 export async function fetchMLBGameById(id) {
     const gameResponse = await fetch(
-        `${baseUrl}/api/v1.1/game/663466/feed/live`
+        `${baseUrl}/api/v1.1/game/${id}/feed/live`
     );
 
     return gameResponse.json();
