@@ -1,18 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
+import styles from '../../styles/Home.module.css';
 
 // types
-import { Games } from '../../types/games';
-
-// utils
-import { getTeamNames } from '../../utils/games';
+import type { Games, GamesArray } from '../../types/all-games';
 
 type Props = {
     games: Games;
 };
 
 const HomepageContainer: React.FC = ({ games }: Props) => {
-    const [formattedGames, setFormattedGames] = useState([]);
+    const [formattedGames, setFormattedGames] = useState<GamesArray>([]);
 
     useEffect(() => {
         const today = getTodaysDate();
@@ -25,11 +23,17 @@ const HomepageContainer: React.FC = ({ games }: Props) => {
         <div>
             {!!formattedGames?.length ? (
                 formattedGames.map((game) => {
-                    const { gamePk, teams } = game;
+                    const {
+                        gamePk,
+                        teams,
+                        status: { abstractGameState },
+                    } = game;
+
                     const {
                         score: awayScore,
                         team: { name: awayName },
                     } = teams.away;
+
                     const {
                         score: homeScore,
                         team: { name: homeName },
@@ -38,12 +42,12 @@ const HomepageContainer: React.FC = ({ games }: Props) => {
                     return (
                         <div key={gamePk} style={{ marginBottom: '6px' }}>
                             <Link href={`/games/${gamePk}`}>
-                                <div style={{ cursor: 'pointer' }}>
+                                <div className={styles.link}>
                                     {awayName} vs. {homeName}
                                 </div>
                             </Link>
                             <div style={{ cursor: 'default' }}>
-                                {awayScore} - {homeScore}
+                                {abstractGameState}: {awayScore} - {homeScore}
                             </div>
                         </div>
                     );

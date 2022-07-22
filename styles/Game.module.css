@@ -1,11 +1,20 @@
 .gameContainer {
     padding-top: 12px;
     width: fit-content;
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    grid-gap: 6px;
+    margin: 0 auto;
 }
 
-.scores {
-    text-align: center;
+.scoreContainer {
+    display: grid;
+    grid-template-columns: 1fr auto 1fr;
+    grid-gap: 4px;
+    align-items: center;
+}
+
+.leftScore {
+    justify-self: end;
+}
+
+.rightScore {
+    justify-self: start;
 }

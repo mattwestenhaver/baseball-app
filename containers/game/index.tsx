@@ -1,19 +1,28 @@
 import React from 'react';
 import styles from '../../styles/Game.module.css';
+import mainStyles from '../../styles/Home.module.css';
 import Link from 'next/link';
 
-import { GameData } from '../../types/games';
+import type { SpecificGameData } from '../../types/game';
 
-import { getTeamNames } from '../../utils/games';
+import {
+    getTeamNames,
+    getGameInningString,
+    getCurrentCountDisplay,
+} from '../../utils/games';
 
 type Props = {
-    data: GameData;
+    data: SpecificGameData;
 };
 
 const GameContainer: React.FC = ({ data }: Props) => {
     const { gameData, liveData } = data;
+    const {
+        status: { abstractGameState },
+    } = gameData;
 
     const { awayName, homeName } = getTeamNames(gameData);
+    const gameState = getGameInningString(liveData);
 
     const {
         linescore: {
@@ -22,20 +31,34 @@ const GameContainer: React.FC = ({ data }: Props) => {
                 home: { runs: homeScore },
             },
         },
+        plays: {
+            currentPlay: { count },
+        },
     } = liveData;
+
+    const currentCount = getCurrentCountDisplay(count);
 
     return (
         <div>
-            <Link href="/">Home</Link>
+            <Link href="/">
+                <span className={mainStyles.link}>Home</span>
+            </Link>
             <div className={styles.gameContainer}>
-                <div className={styles.scores}>
-                    <div>{awayName}</div>
-                    <div>{awayScore}</div>
+                <div style={{ textAlign: 'center' }}>
+                    {abstractGameState === 'Final' ? 'Final' : gameState}
                 </div>
-                <div className={styles.scores}>
-                    <div>{homeName}</div>
-                    <div>{homeScore}</div>
+                <div className={styles.scoreContainer}>
+                    <div className={styles.leftScore}>
+                        {awayName} {awayScore}
+                    </div>
+                    <div>-</div>
+                    <div className={styles.rightScore}>
+                        {homeScore} {homeName}
+                    </div>
                 </div>
+                {abstractGameState === 'Live' && (
+                    <div style={{ textAlign: 'center' }}>{currentCount}</div>
+                )}
             </div>
         </div>
     );
