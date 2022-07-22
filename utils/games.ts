@@ -25,3 +25,11 @@ export const getCurrentCountDisplay = (data: LiveGameData): string => {
     const { balls, strikes, outs } = data.linescore;
     return `${balls}-${strikes}, ${outs} outs`;
 };
+
+export const isGameFinished = (data: GameData): boolean => {
+    const {
+        status: { abstractGameState },
+    } = data;
+
+    return abstractGameState === 'Final';
+};

@@ -14,9 +14,9 @@ const HomepageContainer: React.FC = ({ games }: Props) => {
 
     useEffect(() => {
         const today = getTodaysDate();
-        const data = games?.dates?.find((date) => date.date === today);
+        const retVal = games?.dates?.find((date) => date.date === today);
 
-        setFormattedGames(data?.games);
+        setFormattedGames(retVal?.games);
     }, [games]);
 
     return (
@@ -53,7 +53,7 @@ const HomepageContainer: React.FC = ({ games }: Props) => {
                     );
                 })
             ) : (
-                <div>No Games</div>
+                <div>No Available Games</div>
             )}
         </div>
     );

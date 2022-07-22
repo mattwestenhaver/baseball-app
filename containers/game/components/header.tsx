@@ -9,6 +9,7 @@ import {
     getTeamNames,
     getGameInningString,
     getCurrentCountDisplay,
+    isGameFinished,
 } from '../../../utils/games';
 
 type Props = {
@@ -33,11 +34,12 @@ const GamePageHeader: React.FC<Props> = ({ data }) => {
     const { awayName, homeName } = getTeamNames(gameData);
     const gameState = getGameInningString(liveData);
     const currentCount = getCurrentCountDisplay(liveData);
+    const gameFinished = isGameFinished(gameData);
 
     return (
         <div className={styles.container}>
             <div style={{ textAlign: 'center' }}>
-                {abstractGameState === 'Final' ? 'Final' : gameState}
+                {gameFinished ? 'Final' : gameState}
             </div>
             <div className={styles.scoreContainer}>
                 <div className={styles.leftScore}>
@@ -48,7 +50,7 @@ const GamePageHeader: React.FC<Props> = ({ data }) => {
                     {homeScore} {homeName}
                 </div>
             </div>
-            {abstractGameState === 'Live' && (
+            {!gameFinished && (
                 <div style={{ textAlign: 'center' }}>{currentCount}</div>
             )}
         </div>
