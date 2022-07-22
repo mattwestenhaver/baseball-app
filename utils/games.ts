@@ -21,11 +21,7 @@ export const getGameInningString = (data: LiveGameData): string => {
     return `${inningState} of the ${currentInningOrdinal}`;
 };
 
-export const getCurrentCountDisplay = (count: {
-    balls: number;
-    outs: number;
-    strikes: number;
-}): string => {
-    const { balls, strikes, outs } = count;
+export const getCurrentCountDisplay = (data: LiveGameData): string => {
+    const { balls, strikes, outs } = data.linescore;
     return `${balls}-${strikes}, ${outs} outs`;
 };

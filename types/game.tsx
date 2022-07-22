@@ -10,6 +10,17 @@ type Teams = {
     home: Team;
 };
 
+type CurrentPlay = {
+    matchup: {
+        batter: {
+            fullName: string;
+        };
+        pitcher: {
+            fullName: string;
+        };
+    };
+};
+
 export type LiveGameData = {
     linescore: {
         currentInningOrdinal: string;
@@ -22,15 +33,12 @@ export type LiveGameData = {
                 runs: number;
             };
         };
+        balls: number;
+        outs: number;
+        strikes: number;
     };
     plays: {
-        currentPlay: {
-            count: {
-                balls: number;
-                outs: number;
-                strikes: number;
-            };
-        };
+        currentPlay: CurrentPlay;
     };
 };
 
